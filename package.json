@@ -1,12 +1,13 @@
 {
   "name": "BD-Gamification",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A proof-of-concept gamification of the BD ITLP program for RPI ITWS Capstone.",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2"
+    "express": "latest"
   },
-  "engines": {},
+  "scripts": {
+    "start": "node Server.js"
+    },
   "repository": {
     "type": "git",
     "url": "https://github.com/foks20/ITWS_Capstone_BD_2017"
