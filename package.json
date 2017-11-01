@@ -1,0 +1,19 @@
+{
+  "name": "BD-Gamification",
+  "version": "1.0.0",
+  "description": "A proof-of-concept gamification of the BD ITLP program for RPI ITWS Capstone.",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  },
+  "engines": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foks20/ITWS_Capstone_BD_2017"
+  },
+  "keywords": [
+    "BD",
+    "gamification"
+  ],
+  "author": "Dan Bruce, Chelsea Carlson, Kayla Cinnamon, Samuel Fok, Joseph Noel"
+}
