@@ -12,6 +12,15 @@ router.get('/', function(req, res) {
 	res.sendFile(path + 'index.html');
 });
 
+router.get('/event.html', function(req, res) {
+	res.sendFile(path + 'event.html');
+});
+
+router.get('/approval.html', function(req, res){
+	res.sendFile(path + 'approval.html')
+});
+
+
 // router.get('/about', function(req, res) {
 // 	res.sendFile(path + 'about.html');
 // });
