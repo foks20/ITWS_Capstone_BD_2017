@@ -20,6 +20,9 @@ router.get('/approval.html', function(req, res){
 	res.sendFile(path + 'approval.html')
 });
 
+router.get('/itlp.html', function(req, res){
+	res.sendFile(path + 'itlp.html')
+});
 
 // router.get('/about', function(req, res) {
 // 	res.sendFile(path + 'about.html');
