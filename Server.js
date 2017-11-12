@@ -40,6 +40,7 @@ app.use('/', router);
 
 app.use(express.static(__dirname + '/images'));
 app.use(express.static(__dirname + '/controllers'));
+app.use(express.static(__dirname + '/css'));
 
 // app.use('*', function(req, res) {
 // 	res.sendFile(path + '404.html');
@@ -51,17 +52,54 @@ var dburl = 'mongodb://localhost:27017/bd'
 MongoClient.connect(dburl, function(err, db) {
     assert.equal(null, err);
     console.log("Connected to MongoDB");
-    // Clear events and insert new ones - for testing purposes
+    // Clear events and user and insert new ones - for testing purposes
     db.collection('events').drop()
-    insertEvents(db, function() {});
-    
+    db.collection('users').drop();
+    insertEvents(db, function() {
+        findEvents(db, function(events) {
+            insertUsers(db, events, function() {});
+        });
+    });
+
+    // Routing to get events
     router.get('/events', function(req, res) {
-    findEvents(db, function(docs) {
-        res.send(docs);
-        console.log('GET: events');
+        findEvents(db, function(docs) {
+            res.send(docs);
+            console.log('GET: events');
+        });
+    });
+
+    router.get('/users', function(req, res) {
+        findUsers(db, function(docs) {
+            res.send(docs[0]);
+            console.log('GET: users');
+        });
     });
 });
-});
+
+// User(s)
+
+var insertUsers = function(db, events, callback) {
+    // Need event IDS to link signed up events
+    var eventIDs = []
+    for (event in events) {
+        eventIDs.push(events[event]._id);
+    }
+
+    var users = db.collection('users');
+    users.insert({
+        name: "John Doe",
+        image: "profile_pic.png",
+        points: "7000",
+        events: eventIDs
+    }, function(err, result) {
+        assert.equal(null, err);
+        assert.equal(1, result.result.n);
+        assert.equal(1, result.ops.length);
+        console.log("Inserted 1 user");
+        callback(result);
+    });
+}
 
 // Events
 
@@ -70,7 +108,7 @@ var insertEvents = function(db, callback) {
     events.insertMany([
         {name: "Philanthropy Hosting Event", details: "It's a philanthropy thingy.", contactName: "Jane Smith", contactEmail: "smithj@bd.com", points: "300", committee: "Philanthropy"},
         {name: "Second Round Interview Participation", details: "Recruitment is life.", contactName: "Jane Smith", contactEmail: "smithj@bd.com", points: "250", committee: "Recruiting"},
-        {name: "Time Sheet Compliance", details: "For the non-existant hourly ITLPs.", contactName: "Jane Smith", contactEmail: "smithj@bd.com", points: "100", committee: "Initiatives/Training"},
+        {name: "Time Sheet Compliance", details: "For the non-existant hourly ITLPs.", contactName: "Jane Smith", contactEmail: "smithj@bd.com", points: "100", committee: "Training"},
         {name: "Annual Meeting Planning", details: "Everyone loves meetings about meetings.", contactName: "Jane Smith", contactEmail: "smithj@bd.com", points: "200", committee: "Marketing"}
     ], function(err, result) {
         assert.equal(null, err);
@@ -87,6 +125,16 @@ var findEvents = function(db, callback) {
         assert.equal(null, err);
         assert.equal(4, docs.length);
         console.log("Retrieved Events");
+        callback(docs);
+    });
+}
+
+var findUsers = function(db, callback) {
+    var users = db.collection('users');
+    users.find({}).toArray(function(err, docs) {
+        assert.equal(null, err);
+        assert.equal(1, docs.length);
+        console.log("Retrieved Users");
         callback(docs);
     });
 }

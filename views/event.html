@@ -7,39 +7,42 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="event.css">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 		<script src="eventController.js"></script>
 	</head>
 	<body>
 		<div ng-app="bd">
-			<div>
-				<img src="/bd_logo.png" height="100px" width="180px" />
-				<p style="float: right; margin-right: 20px; margin-top: 10px;">Welcome, ITLP Person #1 | Sign Out</p>
-			</div>
-			<div style="float: right;">
-				<img src="profile_pic.png" width="200px" style="margin-right: 100px;" />
-				<h3 style="padding-left: 10px;">ITLP Person #1</h3>
-				<ul class="list-group" style="margin-right: 100px; width: 200px;">
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="event.html">Events</a>
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="itlp.html">ITLPs</a>
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						Leaderboard
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="approval.html">Approval</a>
-					</li>
-				</ul>
+			<div ng-controller="userCtrl">
+				<div>
+					<img src="/bd_logo.png" height="100px" width="180px" />
+					<p style="float: right; margin-right: 20px; margin-top: 10px;">Welcome, {{user.name}} | Sign Out</p>
+				</div>
+				<div style="float: right;">
+					<img src="{{user.image}}" width="200px" style="margin-right: 100px;" />
+					<h3 style="width: 200px; text-align: center">{{user.name}}</h3>
+					<ul class="list-group" style="margin-right: 100px; width: 200px;">
+						<li class="list-group-item justify-content-between" style="text-align: center;">
+							<a href="event.html">Events</a>
+						</li>
+						<li class="list-group-item justify-content-between" style="text-align: center;">
+							<a href="itlp.html">ITLPs</a>
+						</li>
+						<li class="list-group-item justify-content-between" style="text-align: center;">
+							Leaderboard
+						</li>
+						<li class="list-group-item justify-content-between" style="text-align: center;">
+							<a href="approval.html">Approval</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 			<div style="margin-left: 200px;">
 				<h1 style="float: left;">Events</h1>
 			<div ng-controller="eventCtrl" style="width: 500px; float: left; clear: both; margin-top: -400px;">
 				<ul class="list-group" style="display:block, height:100%, width:100%">
 					<li ng-repeat="event in events" class="list-group-item justify-content-between" >
-						<div id="circle" style="background: #9932cc; width: 10px; height: 10px; border-radius:50%;float:left;"></div>{{event.name}}
+						<div class="event-code {{event.committee}}"></div>{{event.name}}
 						<span class="badge badge-default badge-pill">{{event.points}} Points</span>
 						<p style="font-size: 75%">{{event.details}}</p>
 						<h4 style="font-size:75%"><br><strong>Primary Contact: {{event.contactName}} - {{event.contactEmail}}</strong></h4>
