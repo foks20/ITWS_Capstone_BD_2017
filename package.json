@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "description": "A proof-of-concept gamification of the BD ITLP program for RPI ITWS Capstone.",
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "mongodb": "^2.2.33"
   },
   "scripts": {
     "start": "node Server.js"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/foks20/ITWS_Capstone_BD_2017"
