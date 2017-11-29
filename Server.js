@@ -127,6 +127,7 @@ var findEvents = function(db, callback) {
     });
 }
 
+// Pulls specific events by the IDs in array 'id'
 var findSpecificEvents = function(db, id, callback) {
     var events = db.collection('events');
     for (i in id) {

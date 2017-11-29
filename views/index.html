@@ -31,9 +31,9 @@
 			  </div>
 			</nav>
 			<!-- End Navigation Header -->
-			<div class="container">
+			<div id="center" class="container">
 				<!-- Leaderboard -->
-				<div ng-show="show" ng-controller="leaderboardCtrl" class="col-xs-10">
+				<div id="leaderboard" ng-controller="leaderboardCtrl" class="col-xs-10">
 					<nav class="navbar navbar-default">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
@@ -64,7 +64,7 @@
 				</div>
 				<!-- End Leaderboard -->
 				<!-- Events -->
-				<div ng-show="show" ng-controller="eventCtrl" class="col-xs-10">
+				<div id="events" ng-controller="eventCtrl" class="col-xs-10">
 					<h3>Events</h3>
 					<ul class="list-group">
 						<li ng-repeat="event in events" class="list-group-item justify-content-between">
@@ -105,7 +105,7 @@
 				</div>
 				<!-- End Events -->
 				<!-- Profile -->
-				<div ng-show="show" ng-controller="profileCtrl" class="col-xs-10">
+				<div id="profile" ng-controller="profileCtrl" class="col-xs-10">
 					<div>
 						<h3>Badges</h3>
 						<div>
@@ -153,23 +153,23 @@
 					</div>
 				</div>
 				<!-- End Profile -->
-				<!-- Right Profile Column -->
-				<div ng-show="show" ng-controller="userCtrl" class="col-xs-2">
+				<!-- Right User Column -->
+				<div id="user" ng-controller="userCtrl" class="col-xs-2">
 					<div>
 						<img alt="Profile image" ng-src="{{user.image}}" width="100%"/>
 						<h3>{{user.name}}</h3>
 						<ul id="profileList" class="list-group">
 							<li class="list-group-item justify-content-between">
-								<a href="event.html">Events</a>
+								<a ng-click="toggle('events')" href="#">Events</a>
 							</li>
 							<li class="list-group-item justify-content-between">
-								<a href="itlp.html">ITLPs</a>
+								<a ng-click="toggle('profile')" href="#">ITLPs</a>
 							</li>
 							<li class="list-group-item justify-content-between">
-								Leaderboard
+								<a ng-click="toggle('leaderboard')" href="#">Leaderboard</a>
 							</li>
 							<li class="list-group-item justify-content-between">
-								<a href="approval.html">Approval</a>
+								<a ng-click="toggle('approval')" href="#">Approval</a>
 							</li>
 						</ul>
 					</div>
