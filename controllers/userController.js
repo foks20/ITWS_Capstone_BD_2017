@@ -5,4 +5,6 @@ app.controller("userCtrl", function($scope, $http) {
     }).error(function(data, status, headers, config) {
         console.log("Error retrieving users.");
     });
+
+    $scope.show = true;
 });

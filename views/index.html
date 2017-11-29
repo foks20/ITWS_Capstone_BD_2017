@@ -14,6 +14,7 @@
 		<script src="app.js"></script>
 		<script src="userController.js"></script>
 		<script src="leaderboardController.js"></script>
+		<script src="eventController.js"></script>
 	</head>
 	<body>
 		<div ng-app="bd_gamification">
@@ -25,13 +26,13 @@
 			        <img alt="Brand" src="/bd_logo.png" height="25px">
 			      </a>
 			    </div>
-			    <p class="navbar-text navbar-right" style="margin-right: inherit;">Sign Out</p>
+			    <p class="navbar-text navbar-right">Sign Out</p>
 			  </div>
 			</nav>
 			<!-- End Navigation Header -->
 			<div class="container">
 				<!-- Leaderboard -->
-				<div ng-controller="leaderboardCtrl" class="col-xs-10" style="background-color: blue;">
+				<div ng-show="show" ng-controller="leaderboardCtrl" class="col-xs-10">
 					<nav class="navbar navbar-default">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
@@ -61,12 +62,102 @@
 					</div>
 				</div>
 				<!-- End Leaderboard -->
+				<!-- Events -->
+				<div ng-show="show" ng-controller="eventCtrl" class="col-xs-10">
+					<h3>Events</h3>
+					<ul class="list-group">
+						<li ng-repeat="event in events" class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<span class="event-code {{event.committee}}"></span>
+									<strong class="eventName">{{event.name}}</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">{{event.points}} Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">{{event.details}}</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-10 contact">
+									Primary Contact: {{event.contactName}} - {{event.contactEmail}}
+								</div>
+								<div class="col-xs-2">
+						  		<button class="pull-right">Sign Up</button>
+						  	</div>
+						  </div>
+						</li>
+					</ul>
+					<div>
+						<ul class="noType list-inline">
+							<li class="event-code Philanthropy"></li>
+							<li>Philanthropy</li>
+							<li class="event-code Recruiting"></li>
+							<li>Recruiting</li>
+							<li class="event-code Training"></li>
+							<li>Initiatives/Training</li>
+							<li class="event-code Marketing"></li>
+							<li>Marketing</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Events -->
+				<!-- Profile -->
+			<div style="margin-left: 200px;">
+				<h1 style="float: left;">Badges</h1>
+				<div style="width: 500px; float: left; clear: both; margin-top: -400px;">
+					<span><img src="/bd_logo.png" style="height:25px; width:25px;">Time Keeper</img></span>
+					<span><img src="/bd_logo.png" style="height:25px; width:25px;">Charity Champion</img></span>
+					<span><img src="/bd_logo.png" style="height:25px; width:25px;">Two week Streak</img></span>
+				</div>
+			</div>
+			<div style="margin-left: 200px; margin-top: -100px;">
+				<span style="float: left ;margin-top: 280px;"><h1 >Upcoming Events</h1><a href="#">View Calendar</a></span>
+				<div style="width: 500px; float: left; clear: both; margin-top: -200px;">
+					<ul class="list-group" style="display:block, height:100%, width:100%">
+						<li class="list-group-item justify-content-between" >
+							<div id="circle" style="background: #9932cc; width: 10px; height: 10px; border-radius:50%;float:left;"></div>Philanthropy Hosting Event
+							<span class="badge badge-default badge-pill">300 Points</span>
+							<p style="font-size: 75%">Details about philanthropy hosting event</p>
+							<h4 style="font-size:75%"><br><strong>Primary Contact: Jane Smith - smithj@bd.com</strong></h4>
+							<button style="margin-left: 300px">Cancel Attendance</button>
+						</li>
+						<li class="list-group-item justify-content-between">
+							<div id="circle" style="background: #4169e1; width: 10px; height: 10px; border-radius:50%;float:left;"></div>Time Sheet Compliance
+							<span class="badge badge-default badge-pill">100 Points</span>
+							<p style="font-size: 75%">Details about time sheet compliance</p>
+							<h4 style="font-size:75%"><br><strong>Primary Contact: Jane Smith - smithj@bd.com</strong></h4>
+							<button style="margin-left: 300px">Cancel Attendance</button>
+						</li>
+						<li class="list-group-item justify-content-between">
+							<div id="circle" style="background: #f00; width: 10px; height: 10px; border-radius:50%;float:left;"></div>Annual Meeting Planning
+							<span class="badge badge-default badge-pill">200 Points</span>
+							<p style="font-size: 75%">Details about annual meeting planning</p>
+							<h4 style="font-size:75%"><br><strong>Primary Contact: Jane Smith - smithj@bd.com</strong></h4>
+							<button style="margin-left: 300px">Cancel Attendance</button>
+						</li>
+					</ul>
+					<div>
+						<ul style="overflow: auto">
+							<li style="display: inline;width: 10px;height: 10px;background-color:  #9932cc; border-radius: 50%; float:left;margin-left:5px;"></li>
+							<span style=" float:left; margin-left:10px;"> Philanthropy</span>
+							<li style="display: inline;width: 10px;height: 10px;background-color:  #ffff00; border-radius: 50%; float:left;margin-left:5px;"></li>
+							<span style=" float:left; margin-left:10px;"> Recruiting</span>
+							<li style="display: inline;width: 10px;height: 10px;background-color:  #4169e1; border-radius: 50%; float:left;margin-left:5px;"></li>
+							<span style=" float:left; margin-left:10px;"> Initiatives/Training</span>
+							<li style="display: inline;width: 10px;height: 10px;background-color:  #f00; border-radius: 50%; float:left;margin-left:5px;"></li>
+							<span style=" float:left;margin-left:10px;"> Marketing</span>
+					</ul>
+					</div>
+				</div>
+				<!-- End Profile -->
 				<!-- Right Profile Column -->
-				<div ng-controller="userCtrl" class="col-xs-2" style="background-color: red;">
+				<div ng-show="show" ng-controller="userCtrl" class="col-xs-2">
 					<div>
 						<img alt="Profile image" ng-src="{{user.image}}" width="100%"/>
 						<h3>{{user.name}}</h3>
-						<ul class="list-group">
+						<ul id="profileList" class="list-group">
 							<li class="list-group-item justify-content-between">
 								<a href="event.html">Events</a>
 							</li>

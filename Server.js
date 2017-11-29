@@ -70,8 +70,11 @@ MongoClient.connect(dburl, function(err, db) {
 var insertUsers = function(db, events, callback) {
     // Need event IDS to link signed up events
     var eventIDs = []
+    var count = 0;
     for (event in events) {
         eventIDs.push(events[event]._id);
+        count++;
+        if (count == 2) {break;}
     }
 
     var users = db.collection('users');
