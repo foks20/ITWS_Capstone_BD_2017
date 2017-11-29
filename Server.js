@@ -17,18 +17,6 @@ router.get('/', function(req, res) {
 	res.sendFile(path + 'index.html');
 });
 
-router.get('/event.html', function(req, res) {
-	res.sendFile(path + 'event.html');
-});
-
-router.get('/approval.html', function(req, res){
-	res.sendFile(path + 'approval.html')
-});
-
-router.get('/itlp.html', function(req, res){
-	res.sendFile(path + 'itlp.html')
-});
-
 app.use('/', router);
 
 app.use(express.static(__dirname + '/images'));
