@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var assert = require('assert');
 var path = __dirname + '/views/';
 
@@ -51,10 +52,18 @@ MongoClient.connect(dburl, function(err, db) {
 
     // Routing to get events
     router.get('/events', function(req, res) {
-        findEvents(db, function(docs) {
-            res.send(docs);
-            console.log('GET: events');
-        });
+        // Get a particular set of events by IDs
+        if ("id" in req.query) {
+            findSpecificEvents(db, JSON.parse(req.query.id), function(docs) {
+                res.send(docs);
+                console.log('GET: events by id');
+            })
+        } else {
+            findEvents(db, function(docs) {
+                res.send(docs);
+                console.log('GET: events');
+            });
+        }
     });
 
     router.get('/users', function(req, res) {
@@ -114,6 +123,23 @@ var findEvents = function(db, callback) {
         assert.equal(null, err);
         assert.equal(4, docs.length);
         console.log("Retrieved Events");
+        callback(docs);
+    });
+}
+
+var findSpecificEvents = function(db, id, callback) {
+    var events = db.collection('events');
+    for (i in id) {
+        id[i] = ObjectID(id[i]);
+    }
+    events.find({
+        _id: {
+            $in: id
+        }
+    }).toArray(function(err, docs) {
+        assert.equal(null, err);
+        assert.equal(id.length, docs.length);
+        console.log("Retrieved Events by id");
         callback(docs);
     });
 }
