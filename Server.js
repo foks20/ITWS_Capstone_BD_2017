@@ -28,23 +28,11 @@ router.get('/itlp.html', function(req, res){
 	res.sendFile(path + 'itlp.html')
 });
 
-// router.get('/about', function(req, res) {
-// 	res.sendFile(path + 'about.html');
-// });
-
-// router.get('/contact', function(req, res) {
-// 	res.sendFile(path + 'contact.html');
-// });
-
 app.use('/', router);
 
 app.use(express.static(__dirname + '/images'));
 app.use(express.static(__dirname + '/controllers'));
 app.use(express.static(__dirname + '/css'));
-
-// app.use('*', function(req, res) {
-// 	res.sendFile(path + '404.html');
-// });
 
 // Connect to MongoDB
 
@@ -71,7 +59,7 @@ MongoClient.connect(dburl, function(err, db) {
 
     router.get('/users', function(req, res) {
         findUsers(db, function(docs) {
-            res.send(docs[0]);
+            res.send(docs);
             console.log('GET: users');
         });
     });
@@ -87,16 +75,14 @@ var insertUsers = function(db, events, callback) {
     }
 
     var users = db.collection('users');
-    users.insert({
-        name: "John Doe",
-        image: "profile_pic.png",
-        points: "7000",
-        events: eventIDs
-    }, function(err, result) {
+    users.insertMany([
+        {name: "John Doe", role:"itlp", image: "profile_pic.png", points: "7000", events: eventIDs},
+        {name: "Jane Doe", role:"lead", image: "profile_pic.png", points: "4000", events: eventIDs}
+    ], function(err, result) {
         assert.equal(null, err);
-        assert.equal(1, result.result.n);
-        assert.equal(1, result.ops.length);
-        console.log("Inserted 1 user");
+        assert.equal(2, result.result.n);
+        assert.equal(2, result.ops.length);
+        console.log("Inserted 2 users");
         callback(result);
     });
 }
@@ -133,7 +119,7 @@ var findUsers = function(db, callback) {
     var users = db.collection('users');
     users.find({}).toArray(function(err, docs) {
         assert.equal(null, err);
-        assert.equal(1, docs.length);
+        assert.equal(2, docs.length);
         console.log("Retrieved Users");
         callback(docs);
     });

@@ -8,80 +8,82 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-		<script src="script.js"></script>
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="style.css">
+		<!-- Custom Scripts -->
+		<script src="app.js"></script>
+		<script src="userController.js"></script>
+		<script src="leaderboardController.js"></script>
 	</head>
 	<body>
-		<div>
-			<div>
-				<img src="/bd_logo.png" height="100px" width="180px" />
-				<p style="float: right; margin-right: 20px; margin-top: 10px;">Welcome, Committee Lead | Sign Out</p>
-			</div>
-			<div style="float: right;">
-				<img src="profile_pic.png" width="200px" style="margin-right: 100px;" />
-				<h3 style="padding-left: 10px;">Committee Lead</h3>
-				<ul class="list-group" style="margin-right: 100px; width: 200px;">
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="event.html">Events</a>
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="itlp.html">ITLPs</a>
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						Leaderboard
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="approval.html">Approvals</a>
-					</li>
-				</ul>
-			</div>
-			<div style="margin-left: 200px;">
-				<h1 style="float: left;">Leaderboard</h1>
-				<div class="dropdown show" style="float: left; margin-top: 20px; margin-left: 400px;">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Class Year
-					</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<ul>
-							<li><a class="dropdown-item" href="#">First Years</a></li>
-							<li><a class="dropdown-item" href="#">Second Years</a></li>
-							<li><a class="dropdown-item" href="#">Third Years</a></li>
+		<div ng-app="bd_gamification">
+			<!-- Navigation Header -->
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">
+			        <img alt="Brand" src="/bd_logo.png" height="25px">
+			      </a>
+			    </div>
+			    <p class="navbar-text navbar-right" style="margin-right: inherit;">Sign Out</p>
+			  </div>
+			</nav>
+			<!-- End Navigation Header -->
+			<div class="container">
+				<!-- Leaderboard -->
+				<div ng-controller="leaderboardCtrl" class="col-xs-10" style="background-color: blue;">
+					<nav class="navbar navbar-default">
+					  <div class="container-fluid">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">
+					        Leaderboard
+					      </a>
+					    </div>
+				      <ul class="nav navbar-nav navbar-right">
+				        <li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Class Year <span class="caret"></span></a>
+				          <ul class="dropdown-menu">
+				            <li><a href="#">1st Year</a></li>
+				            <li><a href="#">2nd Year</a></li>
+				            <li><a href="#">3rd Year</a></li>
+				          </ul>
+				        </li>
+				      </ul>
+					  </div>
+					</nav>
+					<div>
+						<ul class="list-group">
+							<li ng-repeat="user in users" class="list-group-item justify-content-between">
+								{{user.name}}
+								<span class="badge badge-default badge-pill">{{user.points}}</span>
+							</li>
 						</ul>
 					</div>
 				</div>
-			<div style="width: 500px; float: left; clear: both; margin-top: -400px;">
-				<ul class="list-group">
-					<li class="list-group-item justify-content-between">
-						ITLP Person #1
-						<span class="badge badge-default badge-pill">3,598</span>
-					</li>
-					<li class="list-group-item justify-content-between">
-						ITLP Person #2
-						<span class="badge badge-default badge-pill">3,270</span>
-					</li>
-					<li class="list-group-item justify-content-between">
-						ITLP Person #3
-						<span class="badge badge-default badge-pill">2,341</span>
-					</li>
-					<li class="list-group-item justify-content-between">
-						ITLP Person #4
-						<span class="badge badge-default badge-pill">2,125</span>
-					</li>
-				</ul>
+				<!-- End Leaderboard -->
+				<!-- Right Profile Column -->
+				<div ng-controller="userCtrl" class="col-xs-2" style="background-color: red;">
+					<div>
+						<img alt="Profile image" ng-src="{{user.image}}" width="100%"/>
+						<h3>{{user.name}}</h3>
+						<ul class="list-group">
+							<li class="list-group-item justify-content-between">
+								<a href="event.html">Events</a>
+							</li>
+							<li class="list-group-item justify-content-between">
+								<a href="itlp.html">ITLPs</a>
+							</li>
+							<li class="list-group-item justify-content-between">
+								Leaderboard
+							</li>
+							<li class="list-group-item justify-content-between">
+								<a href="approval.html">Approval</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Right Profile Column -->
 			</div>
-			<!-- <div>
-				<nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
-       				<ul class="nav navbar-nav">
-      					<li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
-      					<li><a href="/about">About us</a></li>
-      					<li><a href="/contact">Contact us</a></li>
-    				</ul>
-				</nav>
-			</div>
-			<br/> -->
-			<!-- <div class="jumbotron">
-				<p>This is place to put content. You can put slider, short description about your website and place some links for navigation.
-				</p>
-			</div> -->
 		</div>
 	</body>
 </html>
