@@ -1,7 +1,7 @@
 app.controller("userCtrl", function($scope, $http) {
     // Gets all users from server/database
     $http.get("users").success(function(data, status, headers, config) {
-        $scope.user = data[0];
+        $scope.user = data[user];
         if ($scope.user.role == "itlp") {
             $scope.toggle('profile');
         } else {
@@ -13,9 +13,8 @@ app.controller("userCtrl", function($scope, $http) {
 
     $scope.toggle = function(view) {
         // Hide all center views
-        $("#leaderboard").hide();
-        $("#profile").hide();
-        $("#events").hide();
+        $("#center").children().hide();
+        $("#user").show();
 
         // Show selected view
         if (view == "events") {
@@ -24,6 +23,8 @@ app.controller("userCtrl", function($scope, $http) {
             $("#leaderboard").show();
         } else if (view == "profile") {
             $("#profile").show();
+        } else if (view == "approval") {
+            $("#approval").show();
         }
     }
 });

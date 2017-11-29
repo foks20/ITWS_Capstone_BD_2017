@@ -1,7 +1,7 @@
 app.controller("profileCtrl", function($scope, $http) {
     // Gets all events from server/database
     $http.get("users").success(function(data, status, headers, config) {
-        $scope.user = data[0];
+        $scope.user = data[user];
         $http({
             method: 'GET',
             url: '/events',

@@ -16,6 +16,7 @@
 		<script src="leaderboardController.js"></script>
 		<script src="eventController.js"></script>
 		<script src="profileController.js"></script>
+		<script src="approvalController.js"></script>
 	</head>
 	<body>
 		<div ng-app="bd_gamification">
@@ -153,6 +154,70 @@
 					</div>
 				</div>
 				<!-- End Profile -->
+				<!-- Approvals -->
+				<div id="approval" ng-controller="approvalCtrl" class="col-xs-10">
+					<h3>Approvals</h3>
+					<ul class="list-group">
+						<li class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<strong class="eventName">John Doe</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">300 Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">Philanthropy Hosting Event</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="pull-right">Approve</button>
+						  		<button class="pull-right">Deny</button>
+						  	</div>
+						  </div>
+						</li>
+						<li class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<strong class="eventName">John Doe</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">700 Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">Recruiting Event</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="pull-right">Approve</button>
+						  		<button class="pull-right">Deny</button>
+						  	</div>
+						  </div>
+						</li>
+						<li class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<strong class="eventName">John Doe</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">100 Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">Bake sale</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="pull-right">Approve</button>
+						  		<button class="pull-right">Deny</button>
+						  	</div>
+						  </div>
+						</li>
+					</ul>
+				</div>
+				<!-- End Approvals -->
 				<!-- Right User Column -->
 				<div id="user" ng-controller="userCtrl" class="col-xs-2">
 					<div>
