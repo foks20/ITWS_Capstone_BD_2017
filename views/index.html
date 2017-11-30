@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="style.css">
 		<!-- Custom Scripts -->
 		<script src="app.js"></script>
+		<script src="navController.js"></script>
 		<script src="userController.js"></script>
 		<script src="loginController.js"></script>
 		<script src="leaderboardController.js"></script>
@@ -23,22 +24,22 @@
 	<body>
 		<div ng-app="bd_gamification">
 			<!-- Navigation Header -->
-			<nav class="navbar navbar-default">
+			<nav class="navbar navbar-default" ng-controller="navCtrl">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
 			      <a class="navbar-brand" href="#">
 			        <img alt="Brand" src="/bd_logo.png" height="25px">
 			      </a>
 			    </div>
-			    <p class="navbar-text navbar-right">Sign Out</p>
+			    <button class="navbar-text navbar-right" ng-click="signOut();">Sign Out</button>
 			  </div>
 			</nav>
 			<!-- End Navigation Header -->
 			<div id="center" class="container">
 				<!-- Login -->
 				<div id="login" ng-controller="loginCtrl" class="col-sm-10">
-					<button ng-click="user = 0; toggle('profile');">John (ITLP)</button>
-					<button ng-click="user = 1; toggle('leaderboard');">Jane (Lead)</button>
+					<button ng-click="setUser(0);">John (ITLP)</button>
+					<button ng-click="setUser(1);">Jane (Lead)</button>
 				</div>
 				<!-- End Login -->
 				<!-- Leaderboard -->

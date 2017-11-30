@@ -5,7 +5,6 @@ $("#center").children().hide();
 var toggle = function(view) {
     // Hide all center views
     $("#center").children().hide();
-    $("#user").show();
 
     if (view == 'login') {
         $("#" + view).show()
