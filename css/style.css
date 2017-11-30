@@ -1,0 +1,44 @@
+.event-code {
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    border-radius:50%;
+    display: inline-block;
+}
+
+.Philanthropy {
+    background: #9932cc;
+}
+
+.Recruiting {
+    background: #ffff00;
+}
+
+.Training {
+    background: #4169e1;
+}
+
+.Marketing {
+    background: #f00;
+}
+
+#profileList > .list-group-item, h3 {
+    text-align: center;
+}
+
+.eventName {
+    font-size: 125%;
+}
+
+.contact {
+    font-weight: 600;
+}
+
+.noType {
+    list-style-type: none;
+    text-align: center;
+}
+
+.navbar-right {
+    margin-right: inherit;
+}

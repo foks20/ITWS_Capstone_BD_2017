@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var assert = require('assert');
 var path = __dirname + '/views/';
 
@@ -16,35 +17,11 @@ router.get('/', function(req, res) {
 	res.sendFile(path + 'index.html');
 });
 
-router.get('/event.html', function(req, res) {
-	res.sendFile(path + 'event.html');
-});
-
-router.get('/approval.html', function(req, res){
-	res.sendFile(path + 'approval.html')
-});
-
-router.get('/itlp.html', function(req, res){
-	res.sendFile(path + 'itlp.html')
-});
-
-// router.get('/about', function(req, res) {
-// 	res.sendFile(path + 'about.html');
-// });
-
-// router.get('/contact', function(req, res) {
-// 	res.sendFile(path + 'contact.html');
-// });
-
 app.use('/', router);
 
 app.use(express.static(__dirname + '/images'));
 app.use(express.static(__dirname + '/controllers'));
 app.use(express.static(__dirname + '/css'));
-
-// app.use('*', function(req, res) {
-// 	res.sendFile(path + '404.html');
-// });
 
 // Connect to MongoDB
 
@@ -63,15 +40,23 @@ MongoClient.connect(dburl, function(err, db) {
 
     // Routing to get events
     router.get('/events', function(req, res) {
-        findEvents(db, function(docs) {
-            res.send(docs);
-            console.log('GET: events');
-        });
+        // Get a particular set of events by IDs
+        if ("id" in req.query) {
+            findSpecificEvents(db, JSON.parse(req.query.id), function(docs) {
+                res.send(docs);
+                console.log('GET: events by id');
+            })
+        } else {
+            findEvents(db, function(docs) {
+                res.send(docs);
+                console.log('GET: events');
+            });
+        }
     });
 
     router.get('/users', function(req, res) {
         findUsers(db, function(docs) {
-            res.send(docs[0]);
+            res.send(docs);
             console.log('GET: users');
         });
     });
@@ -82,21 +67,22 @@ MongoClient.connect(dburl, function(err, db) {
 var insertUsers = function(db, events, callback) {
     // Need event IDS to link signed up events
     var eventIDs = []
+    var count = 0;
     for (event in events) {
         eventIDs.push(events[event]._id);
+        count++;
+        if (count == 2) {break;}
     }
 
     var users = db.collection('users');
-    users.insert({
-        name: "John Doe",
-        image: "profile_pic.png",
-        points: "7000",
-        events: eventIDs
-    }, function(err, result) {
+    users.insertMany([
+        {name: "John Doe", role:"itlp", image: "profile_pic.png", points: "7000", events: eventIDs},
+        {name: "Jane Doe", role:"lead", image: "profile_pic.png", points: "4000", events: eventIDs}
+    ], function(err, result) {
         assert.equal(null, err);
-        assert.equal(1, result.result.n);
-        assert.equal(1, result.ops.length);
-        console.log("Inserted 1 user");
+        assert.equal(2, result.result.n);
+        assert.equal(2, result.ops.length);
+        console.log("Inserted 2 users");
         callback(result);
     });
 }
@@ -129,11 +115,29 @@ var findEvents = function(db, callback) {
     });
 }
 
+// Pulls specific events by the IDs in array 'id'
+var findSpecificEvents = function(db, id, callback) {
+    var events = db.collection('events');
+    for (i in id) {
+        id[i] = ObjectID(id[i]);
+    }
+    events.find({
+        _id: {
+            $in: id
+        }
+    }).toArray(function(err, docs) {
+        assert.equal(null, err);
+        assert.equal(id.length, docs.length);
+        console.log("Retrieved Events by id");
+        callback(docs);
+    });
+}
+
 var findUsers = function(db, callback) {
     var users = db.collection('users');
     users.find({}).toArray(function(err, docs) {
         assert.equal(null, err);
-        assert.equal(1, docs.length);
+        assert.equal(2, docs.length);
         console.log("Retrieved Users");
         callback(docs);
     });

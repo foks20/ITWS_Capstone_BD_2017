@@ -8,80 +8,239 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-		<script src="script.js"></script>
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="style.css">
+		<!-- Custom Scripts -->
+		<script src="app.js"></script>
+		<script src="userController.js"></script>
+		<script src="leaderboardController.js"></script>
+		<script src="eventController.js"></script>
+		<script src="profileController.js"></script>
+		<script src="approvalController.js"></script>
 	</head>
 	<body>
-		<div>
-			<div>
-				<img src="/bd_logo.png" height="100px" width="180px" />
-				<p style="float: right; margin-right: 20px; margin-top: 10px;">Welcome, Committee Lead | Sign Out</p>
-			</div>
-			<div style="float: right;">
-				<img src="profile_pic.png" width="200px" style="margin-right: 100px;" />
-				<h3 style="padding-left: 10px;">Committee Lead</h3>
-				<ul class="list-group" style="margin-right: 100px; width: 200px;">
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="event.html">Events</a>
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="itlp.html">ITLPs</a>
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						Leaderboard
-					</li>
-					<li class="list-group-item justify-content-between" style="text-align: center;">
-						<a href="approval.html">Approvals</a>
-					</li>
-				</ul>
-			</div>
-			<div style="margin-left: 200px;">
-				<h1 style="float: left;">Leaderboard</h1>
-				<div class="dropdown show" style="float: left; margin-top: 20px; margin-left: 400px;">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Class Year
-					</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<ul>
-							<li><a class="dropdown-item" href="#">First Years</a></li>
-							<li><a class="dropdown-item" href="#">Second Years</a></li>
-							<li><a class="dropdown-item" href="#">Third Years</a></li>
+		<div ng-app="bd_gamification">
+			<!-- Navigation Header -->
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">
+			        <img alt="Brand" src="/bd_logo.png" height="25px">
+			      </a>
+			    </div>
+			    <p class="navbar-text navbar-right">Sign Out</p>
+			  </div>
+			</nav>
+			<!-- End Navigation Header -->
+			<div id="center" class="container">
+				<!-- Leaderboard -->
+				<div id="leaderboard" ng-controller="leaderboardCtrl" class="col-xs-10">
+					<nav class="navbar navbar-default">
+					  <div class="container-fluid">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">
+					        Leaderboard
+					      </a>
+					    </div>
+				      <ul class="nav navbar-nav navbar-right">
+				        <li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Class Year <span class="caret"></span></a>
+				          <ul class="dropdown-menu">
+				            <li><a href="#">1st Year</a></li>
+				            <li><a href="#">2nd Year</a></li>
+				            <li><a href="#">3rd Year</a></li>
+				          </ul>
+				        </li>
+				      </ul>
+					  </div>
+					</nav>
+					<div>
+						<ul class="list-group">
+							<li ng-repeat="user in users" class="list-group-item justify-content-between">
+								{{user.name}}
+								<span class="badge badge-default badge-pill">{{user.points}}</span>
+							</li>
 						</ul>
 					</div>
 				</div>
-			<div style="width: 500px; float: left; clear: both; margin-top: -400px;">
-				<ul class="list-group">
-					<li class="list-group-item justify-content-between">
-						ITLP Person #1
-						<span class="badge badge-default badge-pill">3,598</span>
-					</li>
-					<li class="list-group-item justify-content-between">
-						ITLP Person #2
-						<span class="badge badge-default badge-pill">3,270</span>
-					</li>
-					<li class="list-group-item justify-content-between">
-						ITLP Person #3
-						<span class="badge badge-default badge-pill">2,341</span>
-					</li>
-					<li class="list-group-item justify-content-between">
-						ITLP Person #4
-						<span class="badge badge-default badge-pill">2,125</span>
-					</li>
-				</ul>
+				<!-- End Leaderboard -->
+				<!-- Events -->
+				<div id="events" ng-controller="eventCtrl" class="col-xs-10">
+					<h3>Events</h3>
+					<ul class="list-group">
+						<li ng-repeat="event in events" class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<span class="event-code {{event.committee}}"></span>
+									<strong class="eventName">{{event.name}}</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">{{event.points}} Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">{{event.details}}</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-10 contact">
+									Primary Contact: {{event.contactName}} - {{event.contactEmail}}
+								</div>
+								<div class="col-xs-2">
+						  		<button class="pull-right">Sign Up</button>
+						  	</div>
+						  </div>
+						</li>
+					</ul>
+					<div>
+						<ul class="noType list-inline">
+							<li class="event-code Philanthropy"></li>
+							<li>Philanthropy</li>
+							<li class="event-code Recruiting"></li>
+							<li>Recruiting</li>
+							<li class="event-code Training"></li>
+							<li>Initiatives/Training</li>
+							<li class="event-code Marketing"></li>
+							<li>Marketing</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Events -->
+				<!-- Profile -->
+				<div id="profile" ng-controller="profileCtrl" class="col-xs-10">
+					<div>
+						<h3>Badges</h3>
+						<div>
+							<span><img src="/bd_logo.png" style="height:25px; width:25px;">Time Keeper</img></span>
+							<span><img src="/bd_logo.png" style="height:25px; width:25px;">Charity Champion</img></span>
+							<span><img src="/bd_logo.png" style="height:25px; width:25px;">Two week Streak</img></span>
+						</div>
+					</div>
+					<div>
+						<h3>Upcoming Events</h3>
+						<ul class="list-group">
+							<li ng-repeat="event in events" class="list-group-item justify-content-between">
+								<div class="row">
+									<div class="col-xs-10">
+										<span class="event-code {{event.committee}}"></span>
+										<strong class="eventName">{{event.name}}</strong>
+									</div>
+									<div class=" col-xs-2">
+										<span class="badge badge-default badge-pill pull-right">{{event.points}} Points</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">{{event.details}}</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-10 contact">
+										Primary Contact: {{event.contactName}} - {{event.contactEmail}}
+									</div>
+									<div class="col-xs-2">
+							  		<button class="pull-right">Sign Up</button>
+							  	</div>
+							  </div>
+							</li>
+						</ul>
+						<ul class="noType list-inline">
+							<li class="event-code Philanthropy"></li>
+							<li>Philanthropy</li>
+							<li class="event-code Recruiting"></li>
+							<li>Recruiting</li>
+							<li class="event-code Training"></li>
+							<li>Initiatives/Training</li>
+							<li class="event-code Marketing"></li>
+							<li>Marketing</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Profile -->
+				<!-- Approvals -->
+				<div id="approval" ng-controller="approvalCtrl" class="col-xs-10">
+					<h3>Approvals</h3>
+					<ul class="list-group">
+						<li class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<strong class="eventName">John Doe</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">300 Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">Philanthropy Hosting Event</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="pull-right">Approve</button>
+						  		<button class="pull-right">Deny</button>
+						  	</div>
+						  </div>
+						</li>
+						<li class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<strong class="eventName">John Doe</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">700 Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">Recruiting Event</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="pull-right">Approve</button>
+						  		<button class="pull-right">Deny</button>
+						  	</div>
+						  </div>
+						</li>
+						<li class="list-group-item justify-content-between">
+							<div class="row">
+								<div class="col-xs-10">
+									<strong class="eventName">John Doe</strong>
+								</div>
+								<div class=" col-xs-2">
+									<span class="badge badge-default badge-pill pull-right">100 Points</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">Bake sale</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="pull-right">Approve</button>
+						  		<button class="pull-right">Deny</button>
+						  	</div>
+						  </div>
+						</li>
+					</ul>
+				</div>
+				<!-- End Approvals -->
+				<!-- Right User Column -->
+				<div id="user" ng-controller="userCtrl" class="col-xs-2">
+					<div>
+						<img alt="Profile image" ng-src="{{user.image}}" width="100%"/>
+						<h3>{{user.name}}</h3>
+						<ul id="profileList" class="list-group">
+							<li class="list-group-item justify-content-between">
+								<a ng-click="toggle('events')" href="#">Events</a>
+							</li>
+							<li class="list-group-item justify-content-between">
+								<a ng-click="toggle('profile')" href="#">ITLPs</a>
+							</li>
+							<li class="list-group-item justify-content-between">
+								<a ng-click="toggle('leaderboard')" href="#">Leaderboard</a>
+							</li>
+							<li class="list-group-item justify-content-between">
+								<a ng-click="toggle('approval')" href="#">Approval</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Right Profile Column -->
 			</div>
-			<!-- <div>
-				<nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
-       				<ul class="nav navbar-nav">
-      					<li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
-      					<li><a href="/about">About us</a></li>
-      					<li><a href="/contact">Contact us</a></li>
-    				</ul>
-				</nav>
-			</div>
-			<br/> -->
-			<!-- <div class="jumbotron">
-				<p>This is place to put content. You can put slider, short description about your website and place some links for navigation.
-				</p>
-			</div> -->
 		</div>
 	</body>
 </html>
