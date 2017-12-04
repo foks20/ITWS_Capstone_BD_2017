@@ -1,7 +1,15 @@
-var app = angular.module("bd_gamification", []);
+var app = angular.module("bd_gamification", ['ngCookies']);
 
 $("#center").children().hide();
 
-// Testing variable due to lack of authentication
-// 0 = john (itlp), 1 = jane (lead)
-var user = 1;
+var toggle = function(view) {
+    // Hide all center views
+    $("#center").children().hide();
+
+    if (view == 'login') {
+        $("#" + view).show()
+    } else {
+        $("#user").show();
+        $("#" + view).show();
+    }
+}

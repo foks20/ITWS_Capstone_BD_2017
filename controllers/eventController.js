@@ -5,4 +5,8 @@ app.controller("eventCtrl", function($scope, $http) {
     }).error(function(data, status, headers, config) {
         console.log("Error retrieving events.");
     });
+
+    $scope.toggle = function(view) {
+        toggle(view);
+    };
 });
