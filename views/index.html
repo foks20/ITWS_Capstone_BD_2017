@@ -17,6 +17,7 @@
 		<script src="userController.js"></script>
 		<script src="loginController.js"></script>
 		<script src="leaderboardController.js"></script>
+		<script src="eventFormController.js"></script>
 		<script src="eventController.js"></script>
 		<script src="profileController.js"></script>
 		<script src="approvalController.js"></script>
@@ -73,9 +74,63 @@
 					</div>
 				</div>
 				<!-- End Leaderboard -->
+				<!-- Event Form -->
+				<form id="eventform" class="col-xs-10 form-horizontal" role="form" ng-controller="formCtrl">
+					<div class="form-group">
+						<label for="eventName" class="col-sm-2 control-label">Event Name: </label>
+						<div class="col-sm-4">
+							<input ng-model="formInfo.eventname" class="form-control" id="eventName" placeholder="Event Name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="points" class="col-sm-2 control-label">Points: </label>
+						<div class="col-sm-4">
+							<input ng-model="formInfo.points" class="form-control" id="points" placeholder="Points">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="details" class="col-sm-2 control-label">Details: </label>
+						<div class="col-sm-4">
+							<textarea ng-model="formInfo.details" rows="3" cols="25" class="form-control" id="details" placeholder="Details"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="contactname" class="col-sm-2 control-label">Contact Name: </label>
+						<div class="col-sm-4">
+							<input ng-model="formInfo.contactname" class="form-control" id="contactname" placeholder="Contact Name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="contactemail" class="col-sm-2 control-label">Contact Email: </label>
+						<div class="col-sm-4">
+							<input ng-model="formInfo.contactemail" class="form-control" id="contactemail" placeholder="Contact Email">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="committee" class="col-sm-2 control-label">Committee: </label>
+						<div class="col-sm-4">
+							<input ng-model="formInfo.committee" class="form-control" id="committee" placeholder="Committee">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button ng-click="postData()" type="submit" class="btn btn-success">Submit </button>
+						</div>
+					</div>
+				</form>
+				<!-- End Event Form -->
 				<!-- Events -->
 				<div id="events" ng-controller="eventCtrl" class="col-xs-10">
-					<h3>Events</h3>
+					<nav class="navbar navbar-default">
+					  <div class="container-fluid">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">
+					        Events
+					      </a>
+					    </div>
+				      <button class="btn-default navbar-text navbar-right" ng-click="toggle('eventform');">Create</button>
+					  </div>
+					</nav>
 					<ul class="list-group">
 						<li ng-repeat="event in events" class="list-group-item justify-content-between">
 							<div class="row">
@@ -237,12 +292,12 @@
 								<a ng-click="toggle('events')" href="#">Events</a>
 							</li>
 							<li class="list-group-item justify-content-between">
-								<a ng-click="toggle('profile')" href="#">ITLPs</a>
+								<a ng-click="toggle('profile')" href="#">Profile</a>
 							</li>
-							<li class="list-group-item justify-content-between">
+							<li ng-show="show" class="list-group-item justify-content-between">
 								<a ng-click="toggle('leaderboard')" href="#">Leaderboard</a>
 							</li>
-							<li class="list-group-item justify-content-between">
+							<li ng-show="show" class="list-group-item justify-content-between">
 								<a ng-click="toggle('approval')" href="#">Approval</a>
 							</li>
 						</ul>

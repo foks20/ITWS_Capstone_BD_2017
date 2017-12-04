@@ -3,22 +3,23 @@ var app = express();
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
+var bodyParser = require('body-parser');
 var assert = require('assert');
 var path = __dirname + '/views/';
 
+// Default starting amount
+var numEvents = 4;
+
 // Routing
 
-router.use(function (req, res, next) {
-	// console.log('/' + req.method);
-	next();
-});
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 router.get('/', function(req, res) {
 	res.sendFile(path + 'index.html');
 });
 
 app.use('/', router);
-
 app.use(express.static(__dirname + '/images'));
 app.use(express.static(__dirname + '/controllers'));
 app.use(express.static(__dirname + '/css'));
@@ -28,6 +29,7 @@ app.use(express.static(__dirname + '/css'));
 var dburl = 'mongodb://localhost:27017/bd'
 MongoClient.connect(dburl, function(err, db) {
     assert.equal(null, err);
+
     console.log("Connected to MongoDB");
     // Clear events and user and insert new ones - for testing purposes
     db.collection('events').drop()
@@ -36,6 +38,20 @@ MongoClient.connect(dburl, function(err, db) {
         findEvents(db, function(events) {
             insertUsers(db, events, function() {});
         });
+    });
+
+    router.post('/createEvent', function (req, res) {
+        console.log(req);
+        db.collection('events').insertOne(req.body, 
+            function(err, result) {
+                assert.equal(null, err);
+                assert.equal(1, result.result.n);
+                assert.equal(1, result.ops.length);
+                console.log('POST: createEvent');
+                numEvents++;
+                res.send('Data received:\n' + JSON.stringify(req.body));
+            }
+        );
     });
 
     // Routing to get events
@@ -109,7 +125,7 @@ var findEvents = function(db, callback) {
     var events = db.collection('events');
     events.find({}).toArray(function(err, docs) {
         assert.equal(null, err);
-        assert.equal(4, docs.length);
+        assert.equal(numEvents, docs.length);
         console.log("Retrieved Events");
         callback(docs);
     });

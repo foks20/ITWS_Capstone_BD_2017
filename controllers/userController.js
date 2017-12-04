@@ -7,8 +7,10 @@ app.controller("userCtrl", function($scope, $http, $cookies) {
             if (user) {
                 if (user == "0") {
                     user = 0;
+                    $scope.show = false;
                 } else {
                     user = 1;
+                    $scope.show = true;
                 }
             } else {
                 // This is just to avoid any errors, not really "right"
