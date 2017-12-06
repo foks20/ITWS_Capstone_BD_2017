@@ -32,8 +32,9 @@ MongoClient.connect(dburl, function(err, db) {
 
     console.log("Connected to MongoDB");
     // Clear events and user and insert new ones - for testing purposes
-    db.collection('events').drop()
+    db.collection('events').drop();
     db.collection('users').drop();
+	db.collection('approvals').drop();
     insertEvents(db, function() {
         findEvents(db, function(events) {
             insertUsers(db, events, function() {});
@@ -76,6 +77,41 @@ MongoClient.connect(dburl, function(err, db) {
             console.log('GET: users');
         });
     });
+	
+	router.get('/approvals', function(req, res) {
+        var users = db.collection('users');
+		users.find({}).toArray(function(err, docs) {
+			assert.equal(null, err);
+			assert.equal(2, docs.length);
+			console.log("Retrieved Approvals");
+		});
+    });
+	
+	router.post('/signUp', function(req, res) {
+		var approvals = db.collection('approvals');
+		try {
+			approvals.insertOne( req.body , function(err, result) { res.send('Data received:\n' + JSON.stringify(req.body)); });
+		} catch (e) {
+			print (e.stack);
+		};
+	})
+	
+	router.post('/approveEvent', function(req, res) {
+		var users = db.collection('users');
+        var compareID = ObjectID(req.body.id);
+	    if (users.findAndModify({
+            query: {_id: compareID},
+			new: true,
+			update: { $addToSet: {events: req.body.eventID}, $inc: { points: req.body.points}}
+		}) != null)
+		{
+			// Remove from the approvals board
+			var app = db.collection('approvals');
+			if ( app.findAndModify({ query: {_id: compareID}, remove: true }) != null ) {
+				return true;
+			}
+		}
+	});
 });
 
 // User(s)
@@ -158,7 +194,6 @@ var findUsers = function(db, callback) {
         callback(docs);
     });
 }
-
 
 app.listen(3000, function() {
 	console.log('Live at port 3000');
