@@ -225,7 +225,7 @@
 							<li ng-repeat="approval in approvals" class="list-group-item justify-content-between">
 								<div class="row">
 									<div class="col-xs-10">
-										<strong class="eventName">User: {{approval.userID}}</strong>
+										<strong class="eventName">User: {{approval.userName}}</strong>
 									</div>
 								</div>
 								<div class="row">
@@ -233,7 +233,7 @@
 								</div>
 								<div class="row">
 									<div class="col-xs-2">
-										<button ng-click"approve(approval.userID, approval.eventID, approval.points, approval._id)" class="pull-right">Approve</button>
+										<button ng-click="approve(approval.userID, approval.eventID, approval.points, approval._id)" class="pull-right">Approve</button>
 										<button class="pull-right">Decline</button>
 									</div>
 							  </div>

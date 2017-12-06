@@ -5,7 +5,7 @@ app.controller("approvalCtrl", function($scope, $http, $cookies) {
     	var data = {
     	    id: userid,
 			eventID: eventid,
-			points: p,
+			points: parseInt(p),
 			appID: appID
     	};
 
@@ -20,7 +20,6 @@ app.controller("approvalCtrl", function($scope, $http, $cookies) {
 
 	$http.get("approvals").success(function(data, status, headers, config) {
         $scope.approvals = data;
-		alert(String($scope.approvals));
     }).error(function(data, status, headers, config) {
         console.log("Error retrieving approvals.");
     });

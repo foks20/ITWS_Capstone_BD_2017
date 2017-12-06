@@ -103,18 +103,22 @@ MongoClient.connect(dburl, function(err, db) {
 	
 	router.post('/approveEvent', function(req, res) {
 		var users = db.collection('users');
-        var compareID = ObjectID(req.body.userID);
-	    if (users.findAndModify({
-            query: {_id: compareID},
-			new: true,
-			update: { $addToSet: {events: req.body.eventID}, $inc: { points: req.body.points}}
-		}) != null)
+        var compareID = ObjectID(req.body.id);
+		users.find({_id: compareID}).toArray(function(err, docs) {
+        assert.equal(null, err);
+        assert.equal(1, docs.length);
+    });
+		if (users.findOneAndUpdate(
+            {_id: compareID},
+			{ $addToSet: {events: req.body.eventID}, $inc: { points: req.body.points}}
+		) != null)
 		{
 			// Remove from the approvals board
 			var app = db.collection('approvals');
-			if ( app.findAndModify({ query: {_id: ObjectID(req.body.appID)}, remove: true }) != null ) {
-				return true;
-			}
+			console.log("before remove");
+			app.deleteOne({ _id: ObjectID(req.body.appID) }, function(err, obj) {
+				if (err) console.log(err); else res.send(obj);
+			});	
 		}
 	});
 });
@@ -146,8 +150,8 @@ var insertUsers = function(db, events, callback) {
 
     var users = db.collection('users');
     users.insertMany([
-        {name: "John Doe", role:"itlp", image: "profile_pic.png", points: "7000", events: eventIDs},
-        {name: "Jane Doe", role:"lead", image: "profile_pic.png", points: "4000", events: eventIDs}
+        {name: "John Doe", role:"itlp", image: "profile_pic.png", points: 7000, events: eventIDs},
+        {name: "Jane Doe", role:"lead", image: "profile_pic.png", points: 4000, events: eventIDs}
     ], function(err, result) {
         assert.equal(null, err);
         assert.equal(2, result.result.n);
