@@ -150,7 +150,7 @@
 									Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 								</div>
 								<div class="col-xs-2">
-						  		<md-button ng-click="signUp(event.name, event.points)" class="pull-right">Sign Up</md-button>
+						  		<button ng-click="signUp(event._id, event.name, event.points)" class="pull-right">Sign Up</button>
 						  	</div>
 						  </div>
 						</li>
@@ -222,19 +222,19 @@
 				<div id="approval" ng-controller="approvalCtrl" class="col-xs-10">
 					<h3>Approvals</h3>
 					<ul class="list-group">
-							<li ng-repeat="approve in approvals" class="list-group-item justify-content-between">
+							<li ng-repeat="approval in approvals" class="list-group-item justify-content-between">
 								<div class="row">
 									<div class="col-xs-10">
-										<strong class="eventName">{{approval.userId}}</strong>
+										<strong class="eventName">User: {{approval.userID}}</strong>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-12">{{approval.eventId}}</div>
+									<div class="col-xs-12">Event: {{approval.eventName}}</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-2">
-										<md-button ng-click"approveEvent(approval.userId, approval.eventId, approval.points)" class="pull-right">Approve</md-button>
-										<md-button class="pull-right">Decline</md-button>
+										<button ng-click"approve(approval.userID, approval.eventID, approval.points, approval._id)" class="pull-right">Approve</button>
+										<button class="pull-right">Decline</button>
 									</div>
 							  </div>
 							</li>

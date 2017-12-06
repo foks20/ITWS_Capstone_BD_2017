@@ -37,9 +37,14 @@ MongoClient.connect(dburl, function(err, db) {
 	db.collection('approvals').drop();
     insertEvents(db, function() {
         findEvents(db, function(events) {
-            insertUsers(db, events, function() {});
+            insertUsers(db, events, function() {
+				findUsers(db, function(users) {
+					insertTest(db, events, users, function() {});
+				});
+			});
         });
     });
+	
 
     router.post('/createEvent', function (req, res) {
         console.log(req);
@@ -98,7 +103,7 @@ MongoClient.connect(dburl, function(err, db) {
 	
 	router.post('/approveEvent', function(req, res) {
 		var users = db.collection('users');
-        var compareID = ObjectID(req.body.id);
+        var compareID = ObjectID(req.body.userID);
 	    if (users.findAndModify({
             query: {_id: compareID},
 			new: true,
@@ -107,7 +112,7 @@ MongoClient.connect(dburl, function(err, db) {
 		{
 			// Remove from the approvals board
 			var app = db.collection('approvals');
-			if ( app.findAndModify({ query: {_id: compareID}, remove: true }) != null ) {
+			if ( app.findAndModify({ query: {_id: ObjectID(req.body.appID)}, remove: true }) != null ) {
 				return true;
 			}
 		}
@@ -115,6 +120,19 @@ MongoClient.connect(dburl, function(err, db) {
 });
 
 // User(s)
+
+var insertTest = function(db, events, users, callback) {
+	var eventID = events[0]._id;
+	var userID = users._id;
+	var points = events[0].points;
+	var eventName = events[0].name;
+	
+	db.collection('approvals').insertOne({eventID: events[0]._id, userID:users[0]._id, userName:users[0].name, points:events[0].points, eventName:events[0].name}, function(err, result) {
+                assert.equal(null, err);
+                console.log('Insert test data');
+                callback(result);
+            });
+}
 
 var insertUsers = function(db, events, callback) {
     // Need event IDS to link signed up events

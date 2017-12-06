@@ -1,11 +1,12 @@
 app.controller("approvalCtrl", function($scope, $http, $cookies) {
     // Place holder
 	
-    $scope.approveEvent = function (userid, eventid, p) {
+    $scope.approve = function (userid, eventid, p, appID) {
     	var data = {
     	    id: userid,
 			eventID: eventid,
-			points: p
+			points: p,
+			appID: appID
     	};
 
         console.log(data);
@@ -19,6 +20,7 @@ app.controller("approvalCtrl", function($scope, $http, $cookies) {
 
 	$http.get("approvals").success(function(data, status, headers, config) {
         $scope.approvals = data;
+		alert(String($scope.approvals));
     }).error(function(data, status, headers, config) {
         console.log("Error retrieving approvals.");
     });

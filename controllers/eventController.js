@@ -6,10 +6,12 @@ app.controller("eventCtrl", function($scope, $http, $cookies) {
         console.log("Error retrieving events.");
     });
 
-	$scope.signUp = function(eventid, points) {
+	$scope.signUp = function(eventid, eName, points) {
 		var data = {
-    	    userId: $cookies.user,			
-			eventId: eventid,
+    	    userID: $cookies.user,
+			userName: "??",
+			eventID: eventid,
+			eventName: eName,
 			points: points
     	};
 
