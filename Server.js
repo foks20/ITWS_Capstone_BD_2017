@@ -79,10 +79,10 @@ MongoClient.connect(dburl, function(err, db) {
     });
 	
 	router.get('/approvals', function(req, res) {
-        var users = db.collection('users');
+        var users = db.collection('approvals');
 		users.find({}).toArray(function(err, docs) {
 			assert.equal(null, err);
-			assert.equal(2, docs.length);
+			res.send(docs);
 			console.log("Retrieved Approvals");
 		});
     });
