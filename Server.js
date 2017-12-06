@@ -83,6 +83,14 @@ MongoClient.connect(dburl, function(err, db) {
         });
     });
 	
+	router.get('/specificUser', function(req, res) {
+		console.log(req.body.userName);
+        findSpecificUsers(db, req.body.userName, function(docs) {
+            res.send(docs);
+            console.log('GET: users');
+        });
+    });
+	
 	router.get('/approvals', function(req, res) {
         var users = db.collection('approvals');
 		users.find({}).toArray(function(err, docs) {
@@ -213,6 +221,16 @@ var findUsers = function(db, callback) {
         assert.equal(null, err);
         assert.equal(2, docs.length);
         console.log("Retrieved Users");
+        callback(docs);
+    });
+}
+
+var findSpecificUsers = function(db, userName, callback) {
+    var users = db.collection('users');
+	console.log(userName);
+    users.find({name: userName}).toArray(function(err, docs) {
+        assert.equal(null, err);
+        console.log("Retrieved specific User");
         callback(docs);
     });
 }
