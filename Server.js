@@ -84,8 +84,8 @@ MongoClient.connect(dburl, function(err, db) {
     });
 	
 	router.get('/specificUser', function(req, res) {
-		console.log(req.body.userName);
-        findSpecificUsers(db, req.body.userName, function(docs) {
+		console.log(JSON.stringify(req.query.userName));
+        findSpecificUsers(db, req.query.userName, function(docs) {
             res.send(docs);
             console.log('GET: users');
         });
@@ -209,7 +209,7 @@ var findSpecificEvents = function(db, id, callback) {
         }
     }).toArray(function(err, docs) {
         assert.equal(null, err);
-        assert.equal(id.length, docs.length);
+        //assert.equal(id.length, docs.length);
         console.log("Retrieved Events by id");
         callback(docs);
     });
@@ -227,10 +227,9 @@ var findUsers = function(db, callback) {
 
 var findSpecificUsers = function(db, userName, callback) {
     var users = db.collection('users');
-	console.log(userName);
-    users.find({name: userName}).toArray(function(err, docs) {
+	users.find({name: userName}).toArray(function(err, docs) {
         assert.equal(null, err);
-        console.log("Retrieved specific User");
+		console.log("Retrieved specific User");
         callback(docs);
     });
 }
