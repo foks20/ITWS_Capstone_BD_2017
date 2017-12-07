@@ -12,8 +12,7 @@ app.controller("approvalCtrl", function($scope, $http, $cookies) {
         console.log(data);
 
     	$http.post('/approveEvent', data).then(function(response) {
-    	    $route.reload();
-			$window.reload();
+    	    location.reload();
     	}).catch(function(error) {
     	    console.error("error in posting");
     	});
