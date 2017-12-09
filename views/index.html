@@ -8,6 +8,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-cookies.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="style.css">
@@ -26,21 +27,21 @@
 		<div ng-app="bd_gamification">
 			<!-- Navigation Header -->
 			<nav class="navbar navbar-default" ng-controller="navCtrl">
-			  <div class="container-fluid">
+			  <div class="container-fluid" id="nav">
 			    <div class="navbar-header">
 			      <a class="navbar-brand" href="#">
-			        <img alt="Brand" src="/bd_logo.png" height="25px">
+			        <img alt="Brand" src="/bd_logo.png" id="logo">
 			      </a>
 			    </div>
-			    <button class="navbar-text navbar-right" ng-click="signOut();">Sign Out</button>
+			    <button class="btn navbar-text navbar-right" ng-click="signOut();">Sign Out</button>
 			  </div>
 			</nav>
 			<!-- End Navigation Header -->
 			<div id="center" class="container">
 				<!-- Login -->
 				<div id="login" ng-controller="loginCtrl" class="col-sm-10">
-					<button ng-click="setUser(0);">John (ITLP)</button>
-					<button ng-click="setUser(1);">Jane (Lead)</button>
+					<button class="btn" ng-click="setUser(0);">John (ITLP)</button>
+					<button class="btn" ng-click="setUser(1);">Jane (Lead)</button>
 				</div>
 				<!-- End Login -->
 				<!-- Leaderboard -->
@@ -128,7 +129,7 @@
 					        Events
 					      </a>
 					    </div>
-				      <button class="btn-default navbar-text navbar-right" ng-click="toggle('eventform');">Create</button>
+				      <button class="btn btn-default navbar-text navbar-right" ng-click="toggle('eventform');">Create</button>
 					  </div>
 					</nav>
 					<ul class="list-group">
@@ -174,9 +175,9 @@
 					<div>
 						<h3>Badges</h3>
 						<div>
-							<span><img src="/bd_logo.png" style="height:25px; width:25px;">Time Keeper</img></span>
-							<span><img src="/bd_logo.png" style="height:25px; width:25px;">Charity Champion</img></span>
-							<span><img src="/bd_logo.png" style="height:25px; width:25px;">Two week Streak</img></span>
+							<span><img src="/trophy.ico" style="height:25px; width:25px;">Time Keeper</img></span>
+							<span><img src="/trophy.ico" style="height:25px; width:25px;">Charity Champion</img></span>
+							<span><img src="/trophy.ico" style="height:25px; width:25px;">Two week Streak</img></span>
 						</div>
 					</div>
 					<div>
@@ -200,7 +201,7 @@
 										Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 									</div>
 									<div class="col-xs-2">
-							  		<button class="pull-right">Sign Up</button>
+							  		<button class="btn btn-success pull-right">Sign Up</button>
 							  	</div>
 							  </div>
 							</li>

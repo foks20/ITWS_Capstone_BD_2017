@@ -1,3 +1,15 @@
+body {
+    font-family: 'Hind', sans-serif;
+}
+
+#logo {
+    height: 75px;
+}
+
+#nav {
+    height: 100px;
+}
+
 .event-code {
     width: 10px;
     height: 10px;
@@ -41,4 +53,5 @@
 
 .navbar-right {
     margin-right: inherit;
+    margin-top: 30px;
 }
