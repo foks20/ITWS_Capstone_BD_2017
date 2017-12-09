@@ -3,11 +3,13 @@ app.controller("formCtrl", function($scope, $http, $cookies) {
     $http.get("users").success(function(data, status, headers, config) {
         var user = $cookies.user;
         $scope.user = data[user];
-        console.log(data);
-        if ($scope.user.role == "itlp") {
-            $scope.toggle('profile');
+        if ($scope.user)
+            if ($scope.user.role == "itlp") {
+                $scope.toggle('profile');
+            } else {
+                $scope.toggle('leaderboard');
         } else {
-            $scope.toggle('leaderboard');
+            $scope.toggle('login')
         }
     }).error(function(data, status, headers, config) {
         console.log("Error retrieving users.");
