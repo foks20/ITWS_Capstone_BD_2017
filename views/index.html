@@ -151,7 +151,7 @@
 									Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 								</div>
 								<div class="col-xs-2">
-						  		<button ng-click="signUp(event._id, event.name, event.points)" class="pull-right">Sign Up</button>
+						  		<button ng-click="signUp(event._id, event.name, event.points)" class="btn pull-right btn-success">Sign Up</button>
 						  	</div>
 						  </div>
 						</li>
@@ -201,7 +201,7 @@
 										Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 									</div>
 									<div class="col-xs-2">
-							  		<button class="btn btn-success pull-right">Sign Up</button>
+							  		<button class="btn btn-warning pull-right">Pending</button>
 							  	</div>
 							  </div>
 							</li>
@@ -230,12 +230,12 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-12">Event: {{approval.eventName}}</div>
+									<div class="col-xs-8">Event: {{approval.eventName}}</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-2">
-										<button ng-click="approve(approval.userID, approval.eventID, approval.points, approval._id)" class="pull-right">Approve</button>
-										<button class="pull-right">Decline</button>
+									<div class="col-xs-12">
+										<button ng-click="approve(approval.userID, approval.eventID, approval.points, approval._id)" class="btn btn-success pull-right">Approve</button>
+										<button class="btn btn-danger pull-right">Decline</button>
 									</div>
 							  </div>
 							</li>
