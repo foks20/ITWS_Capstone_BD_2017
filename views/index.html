@@ -107,12 +107,6 @@
 							<input ng-model="formInfo.contactemail" class="form-control" id="contactemail" placeholder="Contact Email">
 						</div>
 					</div>
-					<!-- <div class="form-group">
-						<label for="committee" class="col-sm-2 control-label">Committee: </label>
-						<div class="col-sm-4">
-							<input ng-model="formInfo.committee" class="form-control" id="committee" placeholder="Committee">
-						</div>
-					</div> -->
 					<div class="form-group">
 						<label for="committee" class="col-sm-2 control-label">Committee: </label>
 						<div class="dropdown">
@@ -166,7 +160,7 @@
 									Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 								</div>
 								<div class="col-xs-2">
-						  		<button class="btn btn-success pull-right">Sign Up</button>
+						  		<button ng-click="signUp(event._id, event.name, event.points)" class="btn pull-right btn-success">Sign Up</button>
 						  	</div>
 						  </div>
 						</li>
@@ -216,7 +210,7 @@
 										Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 									</div>
 									<div class="col-xs-2">
-							  		<button class="btn btn-success pull-right">Sign Up</button>
+							  		<button class="btn btn-warning pull-right">Pending</button>
 							  	</div>
 							  </div>
 							</li>
@@ -238,64 +232,23 @@
 				<div id="approval" ng-controller="approvalCtrl" class="col-xs-10">
 					<h3>Approvals</h3>
 					<ul class="list-group">
-						<li class="list-group-item justify-content-between">
-							<div class="row">
-								<div class="col-xs-10">
-									<strong class="eventName">John Doe</strong>
+							<li ng-repeat="approval in approvals" class="list-group-item justify-content-between">
+								<div class="row">
+									<div class="col-xs-10">
+										<strong class="eventName">User: {{approval.userName}}</strong>
+									</div>
 								</div>
-								<div class=" col-xs-2">
-									<span class="badge badge-default badge-pill pull-right">300 Points</span>
+								<div class="row">
+									<div class="col-xs-8">Event: {{approval.eventName}}</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">Philanthropy Hosting Event</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<button class="btn btn-danger pull-right">Deny</button>
-									<button class="btn btn-success pull-right approve-button">Approve</button>
-						  	</div>
-						  </div>
-						</li>
-						<li class="list-group-item justify-content-between">
-							<div class="row">
-								<div class="col-xs-10">
-									<strong class="eventName">John Doe</strong>
-								</div>
-								<div class=" col-xs-2">
-									<span class="badge badge-default badge-pill pull-right">700 Points</span>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">Recruiting Event</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<button class="btn btn-danger pull-right">Deny</button>
-									<button class="btn btn-success pull-right approve-button">Approve</button>
-						  	</div>
-						  </div>
-						</li>
-						<li class="list-group-item justify-content-between">
-							<div class="row">
-								<div class="col-xs-10">
-									<strong class="eventName">John Doe</strong>
-								</div>
-								<div class=" col-xs-2">
-									<span class="badge badge-default badge-pill pull-right">100 Points</span>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">Bake sale</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<button class="btn btn-danger pull-right">Deny</button>
-									<button class="btn btn-success pull-right approve-button">Approve</button>
-						  	</div>
-						  </div>
-						</li>
-					</ul>
+								<div class="row">
+									<div class="col-xs-12">
+										<button ng-click="approve(approval.userID, approval.eventID, approval.points, approval._id)" class="btn btn-success pull-right">Approve</button>
+										<button class="btn btn-danger pull-right">Decline</button>
+									</div>
+							  </div>
+							</li>
+						</ul>
 				</div>
 				<!-- End Approvals -->
 				<!-- Right User Column -->

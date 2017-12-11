@@ -32,13 +32,19 @@ MongoClient.connect(dburl, function(err, db) {
 
     console.log("Connected to MongoDB");
     // Clear events and user and insert new ones - for testing purposes
-    db.collection('events').drop()
+    db.collection('events').drop();
     db.collection('users').drop();
+	db.collection('approvals').drop();
     insertEvents(db, function() {
         findEvents(db, function(events) {
-            insertUsers(db, events, function() {});
+            insertUsers(db, events, function() {
+				findUsers(db, function(users) {
+					insertTest(db, events, users, function() {});
+				});
+			});
         });
     });
+	
 
     router.post('/createEvent', function (req, res) {
         console.log(req);
@@ -76,9 +82,69 @@ MongoClient.connect(dburl, function(err, db) {
             console.log('GET: users');
         });
     });
+	
+	router.get('/specificUser', function(req, res) {
+		console.log(JSON.stringify(req.query.userName));
+        findSpecificUsers(db, req.query.userName, function(docs) {
+            res.send(docs);
+            console.log('GET: users');
+        });
+    });
+	
+	router.get('/approvals', function(req, res) {
+        var users = db.collection('approvals');
+		users.find({}).toArray(function(err, docs) {
+			assert.equal(null, err);
+			res.send(docs);
+			console.log("Retrieved Approvals");
+		});
+    });
+	
+	router.post('/signUp', function(req, res) {
+		var approvals = db.collection('approvals');
+		try {
+			approvals.insertOne( req.body , function(err, result) { res.send('Data received:\n' + JSON.stringify(req.body)); });
+		} catch (e) {
+			print (e.stack);
+		};
+	})
+	
+	router.post('/approveEvent', function(req, res) {
+		var users = db.collection('users');
+        var compareID = ObjectID(req.body.id);
+		users.find({_id: compareID}).toArray(function(err, docs) {
+        assert.equal(null, err);
+        assert.equal(1, docs.length);
+    });
+		if (users.findOneAndUpdate(
+            {_id: compareID},
+			{ $addToSet: {events: req.body.eventID}, $inc: { points: req.body.points}}
+		) != null)
+		{
+			// Remove from the approvals board
+			var app = db.collection('approvals');
+			console.log("before remove");
+			app.deleteOne({ _id: ObjectID(req.body.appID) }, function(err, obj) {
+				if (err) console.log(err); else res.send(obj);
+			});	
+		}
+	});
 });
 
 // User(s)
+
+var insertTest = function(db, events, users, callback) {
+	var eventID = events[0]._id;
+	var userID = users._id;
+	var points = events[0].points;
+	var eventName = events[0].name;
+	
+	db.collection('approvals').insertOne({eventID: events[0]._id, userID:users[0]._id, userName:users[0].name, points:events[0].points, eventName:events[0].name}, function(err, result) {
+                assert.equal(null, err);
+                console.log('Insert test data');
+                callback(result);
+            });
+}
 
 var insertUsers = function(db, events, callback) {
     // Need event IDS to link signed up events
@@ -92,8 +158,8 @@ var insertUsers = function(db, events, callback) {
 
     var users = db.collection('users');
     users.insertMany([
-        {name: "John Doe", role:"itlp", image: "profile_pic.png", points: "7000", events: eventIDs},
-        {name: "Jane Doe", role:"lead", image: "profile_pic.png", points: "4000", events: eventIDs}
+        {name: "John Doe", role:"itlp", image: "profile_pic.png", points: 7000, events: eventIDs},
+        {name: "Jane Doe", role:"lead", image: "profile_pic.png", points: 4000, events: eventIDs}
     ], function(err, result) {
         assert.equal(null, err);
         assert.equal(2, result.result.n);
@@ -143,7 +209,7 @@ var findSpecificEvents = function(db, id, callback) {
         }
     }).toArray(function(err, docs) {
         assert.equal(null, err);
-        assert.equal(id.length, docs.length);
+        //assert.equal(id.length, docs.length);
         console.log("Retrieved Events by id");
         callback(docs);
     });
@@ -159,6 +225,14 @@ var findUsers = function(db, callback) {
     });
 }
 
+var findSpecificUsers = function(db, userName, callback) {
+    var users = db.collection('users');
+	users.find({name: userName}).toArray(function(err, docs) {
+        assert.equal(null, err);
+		console.log("Retrieved specific User");
+        callback(docs);
+    });
+}
 
 app.listen(3000, function() {
 	console.log('Live at port 3000');
