@@ -33,15 +33,15 @@
 			        <img alt="Brand" src="/bd_logo.png" id="logo">
 			      </a>
 			    </div>
-			    <button class="btn btn-default navbar-text navbar-right" ng-click="signOut();">Sign Out</button>
+			    <button class="btn btn-secondary navbar-text navbar-right" ng-click="signOut();">Sign Out</button>
 			  </div>
 			</nav>
 			<!-- End Navigation Header -->
 			<div id="center" class="container">
 				<!-- Login -->
 				<div id="login" ng-controller="loginCtrl" class="col-sm-10">
-					<button class="btn btn-default" ng-click="setUser(0);">John (ITLP)</button>
-					<button class="btn btn-default" ng-click="setUser(1);">Jane (Lead)</button>
+					<button class="btn btn-secondary" ng-click="setUser(0);">John (ITLP)</button>
+					<button class="btn btn-secondary" ng-click="setUser(1);">Jane (Lead)</button>
 				</div>
 				<!-- End Login -->
 				<!-- Leaderboard -->
@@ -107,12 +107,27 @@
 							<input ng-model="formInfo.contactemail" class="form-control" id="contactemail" placeholder="Contact Email">
 						</div>
 					</div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label for="committee" class="col-sm-2 control-label">Committee: </label>
 						<div class="col-sm-4">
 							<input ng-model="formInfo.committee" class="form-control" id="committee" placeholder="Committee">
 						</div>
-					</div>
+					</div> -->
+					<div class="form-group">
+						<label for="committee" class="col-sm-2 control-label">Committee: </label>
+						<div class="dropdown">
+					        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+					            Select...
+					            <span class="caret"></span>
+					        </button>
+					        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					            <li ng-click="committeeSelect('Philanthropy')" class="dropdown-item"><a href="#">Philanthropy</a></li>
+					            <li ng-click="committeeSelect('Recruiting')" class="dropdown-item"><a href="#">Recruiting</a></li>
+					            <li ng-click="committeeSelect('Initiatives/Training')" class="dropdown-item"><a href="#">Initiatives/Training</a></li>
+					            <li ng-click="committeeSelect('Marketing')" class="dropdown-item"><a href="#">Marketing</a></li>
+					         </ul>
+					     </div>
+				    </div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<button ng-click="postData()" type="submit" class="btn btn-success">Submit </button>
@@ -129,7 +144,7 @@
 					        Events
 					      </a>
 					    </div>
-				      <button class="btn btn-default navbar-text navbar-right" ng-click="toggle('eventform');">Create</button>
+				      <button class="btn btn-secondary navbar-text navbar-right" ng-click="toggle('eventform');">Create</button>
 					  </div>
 					</nav>
 					<ul class="list-group">
@@ -159,13 +174,13 @@
 					<div>
 						<ul class="noType list-inline">
 							<li class="event-code Philanthropy"></li>
-							<li>Philanthropy</li>
+							<li class="committee-list">Philanthropy</li>
 							<li class="event-code Recruiting"></li>
-							<li>Recruiting</li>
+							<li class="committee-list">Recruiting</li>
 							<li class="event-code Training"></li>
-							<li>Initiatives/Training</li>
+							<li class="committee-list">Initiatives/Training</li>
 							<li class="event-code Marketing"></li>
-							<li>Marketing</li>
+							<li class="committee-list">Marketing</li>
 						</ul>
 					</div>
 				</div>
@@ -175,9 +190,9 @@
 					<div>
 						<h3>Badges</h3>
 						<div>
-							<span><img src="/trophy.ico" style="height:25px; width:25px;">Time Keeper</img></span>
-							<span><img src="/trophy.ico" style="height:25px; width:25px;">Charity Champion</img></span>
-							<span><img src="/trophy.ico" style="height:25px; width:25px;">Two week Streak</img></span>
+							<span class="itlp-badge"><img src="/trophy.ico" style="height:25px; width:25px;"> Time Keeper</img></span>
+							<span class="itlp-badge"><img src="/trophy.ico" style="height:25px; width:25px;"> Charity Champion</img></span>
+							<span class="itlp-badge"><img src="/trophy.ico" style="height:25px; width:25px;"> Two-Week Streak</img></span>
 						</div>
 					</div>
 					<div>
@@ -208,13 +223,13 @@
 						</ul>
 						<ul class="noType list-inline">
 							<li class="event-code Philanthropy"></li>
-							<li>Philanthropy</li>
+							<li class="committee-list">Philanthropy</li>
 							<li class="event-code Recruiting"></li>
-							<li>Recruiting</li>
+							<li class="committee-list">Recruiting</li>
 							<li class="event-code Training"></li>
-							<li>Initiatives/Training</li>
+							<li class="committee-list">Initiatives/Training</li>
 							<li class="event-code Marketing"></li>
-							<li>Marketing</li>
+							<li class="committee-list">Marketing</li>
 						</ul>
 					</div>
 				</div>
@@ -237,8 +252,8 @@
 							</div>
 							<div class="row">
 								<div class="col-xs-12">
-									<button class="btn btn-success pull-right">Approve</button>
-						  		<button class="btn btn-danger pull-right">Deny</button>
+									<button class="btn btn-danger pull-right">Deny</button>
+									<button class="btn btn-success pull-right approve-button">Approve</button>
 						  	</div>
 						  </div>
 						</li>
@@ -256,8 +271,8 @@
 							</div>
 							<div class="row">
 								<div class="col-xs-12">
-									<button class="btn btn-success pull-right">Approve</button>
-						  		<button class="btn btn-danger pull-right">Deny</button>
+									<button class="btn btn-danger pull-right">Deny</button>
+									<button class="btn btn-success pull-right approve-button">Approve</button>
 						  	</div>
 						  </div>
 						</li>
@@ -275,8 +290,8 @@
 							</div>
 							<div class="row">
 								<div class="col-xs-12">
-									<button class="btn btn-success pull-right">Approve</button>
-						  		<button class="btn btn-danger pull-right">Deny</button>
+									<button class="btn btn-danger pull-right">Deny</button>
+									<button class="btn btn-success pull-right approve-button">Approve</button>
 						  	</div>
 						  </div>
 						</li>
@@ -288,6 +303,7 @@
 					<div>
 						<img alt="Profile image" ng-src="{{user.image}}" width="100%"/>
 						<h3>{{user.name}}</h3>
+						<span id="right-user-points" class="badge badge-default badge-pill">{{user.points}} Points</span>
 						<ul id="profileList" class="list-group">
 							<li class="list-group-item justify-content-between">
 								<a ng-click="toggle('events')" href="#">Events</a>

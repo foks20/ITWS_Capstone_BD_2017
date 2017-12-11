@@ -15,7 +15,26 @@ app.controller("formCtrl", function($scope, $http, $cookies) {
         console.log("Error retrieving users.");
     });
 
+    $(function(){
+        $(".dropdown-menu li a").click(function() {
+          $(".dropdown-toggle:first-child").html($(this).text() + ' <span class="caret"></span>')
+          $(".dropdown-toggle:first-child").val($(this).text());
+       });
+    });
+
     $scope.formInfo = {};
+
+    $scope.formInfo.committee = '';
+
+    $scope.committeeSelect = function(event) {
+        console.log(event);
+        if (event == "Initiatives/Training") {
+            $scope.formInfo.committee = "Training";
+        }
+        else {
+            $scope.formInfo.committee = event;
+        }
+    }
 
     $scope.postData = function () {
     	var data = {
@@ -26,6 +45,7 @@ app.controller("formCtrl", function($scope, $http, $cookies) {
     	    contactEmail: $scope.formInfo.contactemail,
     	    committee: $scope.formInfo.committee
     	};
+        console.log($scope.formInfo.committee);
 
         console.log(data);
 

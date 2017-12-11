@@ -46,6 +46,10 @@ body {
     font-weight: 600;
 }
 
+.itlp-badge {
+    margin-left: 10px;
+}
+
 .noType {
     list-style-type: none;
     text-align: center;
@@ -54,4 +58,25 @@ body {
 .navbar-right {
     margin-right: inherit;
     margin-top: 30px;
+}
+
+.dropdown {
+    display: inline-block;
+    padding-left: 14px;
+}
+
+#right-user-points {
+    margin: auto;
+    display: block;
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.approve-button {
+    margin-right: 10px;
+}
+
+.committee-list {
+    margin-left: -10px;
+    margin-right: 10px;
 }
