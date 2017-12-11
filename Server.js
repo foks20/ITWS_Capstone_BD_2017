@@ -129,6 +129,13 @@ MongoClient.connect(dburl, function(err, db) {
 			});	
 		}
 	});
+	
+	router.post('/denyEvent', function(req, res) {
+		var approvals = db.collection('approvals');
+		approvals.deleteOne({_id: ObjectID(req.body.id)}, function(err, obj) {
+			if (err) console.log(err); else res.send(obj);
+		})
+	})
 });
 
 // User(s)

@@ -17,6 +17,17 @@ app.controller("approvalCtrl", function($scope, $http, $cookies) {
     	    console.error("error in posting");
     	});
     };
+	
+	$scope.deny = function(appid) {
+		var data = {
+			id: appid
+		}
+		$http.post('/denyEvent', data).then(function(response) {
+    	    location.reload();
+    	}).catch(function(error) {
+    	    console.error("error in posting");
+    	});
+	}
 
 	$http.get("approvals").success(function(data, status, headers, config) {
         $scope.approvals = data;

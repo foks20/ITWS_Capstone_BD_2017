@@ -29,6 +29,7 @@ app.controller("eventCtrl", function($scope, $http, $cookies) {
 
 			$http.post('/signUp', data).then(function(response) {
 				console.log("Signed up");
+				location.reload();
 			}).catch(function(error) {
 				console.error("error in posting");
 			});

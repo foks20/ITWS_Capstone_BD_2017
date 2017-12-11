@@ -210,7 +210,7 @@
 										Primary Contact: {{event.contactName}} - {{event.contactEmail}}
 									</div>
 									<div class="col-xs-2">
-							  		<button class="btn btn-warning pull-right">Pending</button>
+							  		<button class="btn btn-success pull-right">Approved</button>
 							  	</div>
 							  </div>
 							</li>
@@ -244,7 +244,7 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<button ng-click="approve(approval.userID, approval.eventID, approval.points, approval._id)" class="btn btn-success pull-right">Approve</button>
-										<button class="btn btn-danger pull-right">Decline</button>
+										<button ng-click="deny(approval._id)" class="btn btn-danger pull-right">Decline</button>
 									</div>
 							  </div>
 							</li>
